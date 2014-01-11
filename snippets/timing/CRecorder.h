@@ -1,12 +1,28 @@
 // -*- c++ -*-
 
 #include <sys/time.h>
+#include <map>
+
+struct SStatistics
+{
+  unsigned int m_nMinMicroSeconds;
+  unsigned int m_nMaxMicroSeconds;
+  unsigned int m_nAvgMicroSeconds;
+  unsigned int m_nSumMicroSeconds;
+  unsigned int m_nCountSamples;
+  typedef std::map<unsigned int,unsigned int> TMapMicroSeconds2Count;
+  TMapMicroSeconds2Count m_mapMicroSeconds2Count;
+};
+
 
 class CRecorder
 {
 private:
   int nSamples_;
   struct timeval* array_timeval_;
+
+  void setup_statistics(SStatistics& oStatistics);
+  unsigned int get_micro_seconds(int nSample);
   
 public:
 
@@ -14,12 +30,8 @@ public:
   ~CRecorder();
 
   timeval* get_p0();
-  void print(const char* sz, int nSamples);
+//  void print(const char* sz, int nSamples);
 
-  int get_micro_seconds(int nSample);
-  int get_min_micro_seconds();
-  int get_max_micro_seconds();
-  int get_count_micro_seconds(int nMuSec);
   void statistics(const char* sz);
 };
 

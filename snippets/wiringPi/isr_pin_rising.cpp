@@ -18,7 +18,7 @@ bool bRising[10000];
 //struct timeval tv1;
 //int nStatus = 0;
 
-void fPINToggle(void)
+void fPINRising(void)
 {
 //  nStatus = 1;
   oLapWatch.RecordLap();
@@ -44,7 +44,7 @@ int main (void)
   unsigned int nSamples = 0;
   unsigned int nSamplesLast = 0;
   unsigned int nCountConstantDuringLoops = 0;
-  wiringPiISR (3, INT_EDGE_BOTH, &fPINToggle) ;
+  wiringPiISR (3, INT_EDGE_RISING, &fPINRising) ;
   for (;;) {
     delay(100);
     unsigned int nSamples = oLapWatch.GetSamples();
